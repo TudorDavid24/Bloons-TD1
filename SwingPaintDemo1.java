@@ -22,7 +22,7 @@ public class SwingPaintDemo1 {
         f.add(p);
         f.pack(); // Adatta la dimensione al contenuto (MyPanel.getPreferredSize)
         f.setVisible(true);
-        
+        f.setResizable(false);
         // Assicurati che il pannello (p) abbia il focus subito all'avvio
         p.requestFocusInWindow(); 
     }
