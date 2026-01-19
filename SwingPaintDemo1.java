@@ -1,4 +1,8 @@
+
 import javax.swing.SwingUtilities;
+
+import UI.MyPanel;
+
 import javax.swing.JFrame;
 
 public class SwingPaintDemo1 {
