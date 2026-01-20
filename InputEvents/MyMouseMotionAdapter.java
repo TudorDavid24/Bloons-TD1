@@ -17,6 +17,7 @@ public class MyMouseMotionAdapter implements MouseMotionListener{
     BombTower BombTowerItem = new BombTower();
     SuperMonkey SuperMonkeyItem = new SuperMonkey();
     MyPanel pannelloSuCuiLavorare;
+    
     public MyMouseMotionAdapter(MyPanel p){
         this.pannelloSuCuiLavorare = p;
     }
@@ -28,6 +29,7 @@ public class MyMouseMotionAdapter implements MouseMotionListener{
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        //Fai visualizzare la descrizione delle truppe
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
             pannelloSuCuiLavorare.createMenu(DartMonkeyItem);
             pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
@@ -58,6 +60,7 @@ public class MyMouseMotionAdapter implements MouseMotionListener{
             pannelloSuCuiLavorare.pannelloStatistiche.setVisible(false);
             pannelloSuCuiLavorare.repaint();
         }
+
 
         if (pannelloSuCuiLavorare.immagineMouse != null) {
             pannelloSuCuiLavorare.mouseX = e.getX();
