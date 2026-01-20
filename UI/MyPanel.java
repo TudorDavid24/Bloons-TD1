@@ -20,9 +20,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.io.File;
 
 public class MyPanel extends JPanel {
@@ -36,9 +34,8 @@ public class MyPanel extends JPanel {
     BombTower B1 = new BombTower();   
     SuperMonkey S1 = new SuperMonkey();
 
-    DartMonkey D1A[] = new DartMonkey[10];
-    int NelD1A = 0;
-
+    public Structure D1A[] = new Structure[10];
+    public int NelD1A = 0;
 
     //Immagini
     Image Bg = new ImageIcon("Immagini/BTD1_bg.png").getImage();
@@ -48,21 +45,16 @@ public class MyPanel extends JPanel {
     Image bombImage = new ImageIcon("Immagini/BTD1_bomb_button.png").getImage();
     Image superImage = new ImageIcon("Immagini/BTD1_super_button.png").getImage();
 
-    boolean IconSelected = false;
-    boolean dartMonkeyIconSelected = false;
-    boolean tackIconSelected = false;
-    boolean iceIconSelected = false;
-    boolean bombIconSelected = false;
-    boolean superMonkeyIconSelected = false;
-
     public JPanel pannelloStatistiche = new JPanel();
 
     //Labels
     JLabel roundLabel, moneyLabel, livesLabel, towersLabel;
 
+    //Labels Info scimmie
     public JLabel title, cost, speed;
     public JTextArea description;
 
+    //Posizione del mouse
     public int mouseX, mouseY;
     public Image immagineMouse = null;
 
@@ -71,12 +63,7 @@ public class MyPanel extends JPanel {
     public MyPanel() {
         setLayout(null);
         setupLabels();
-        MyKeyAdapter KeyBoard = new MyKeyAdapter(this);
-        addKeyListener(KeyBoard);
-        MyMouseMotionAdapter MouseMotionAdapter = new MyMouseMotionAdapter(this);
-        addMouseMotionListener(MouseMotionAdapter);
-        MyMouseAdapter MouseAdapter = new MyMouseAdapter(this);
-        addMouseListener(MouseAdapter);
+        inizializzaAdapter();
 
         pannelloStatistiche.setLayout(null);
         pannelloStatistiche.setBackground(new Color(190, 218, 201)); 
@@ -84,18 +71,50 @@ public class MyPanel extends JPanel {
         pannelloStatistiche.setVisible(false);
         add(pannelloStatistiche);
 
-        Prova1.ImmagineBloons = new ImageIcon("Immagini/BTD1_super_button.png").getImage();
+        //Prova dei pallonici
+        /*Prova1.ImmagineBloons = new ImageIcon("Immagini/BTD1_super_button.png").getImage();
         Prova1.speed = 5;
         Prova1.x=0;
         Prova1.y=290;
         Prova1.pannelloSuCuiLavorare=this;
         Prova1.tipo=1;
-        Prova1.start();
+        Prova1.start();*/
         
-        
+        //Iniziallizzazione dell'array a null
         for (int i = 0; i < 10; i++) {
-            D1A[i] = new DartMonkey();
+            D1A[i] = null;
         }
+    
+    }
+    
+    public void paintComponent(Graphics g) {
+
+        super.paintComponent(g); // Pulisce lo schermo
+
+        // #region Disegno GUI di base
+        // 1. Disegna lo sfondo
+        g.drawImage(Bg, 0, 0, getWidth(), getHeight(), this);
+
+        // 2. Disegna il rettangolo del menu
+        g.setColor(new Color(191, 191, 191, 200));
+        g.fillRect(605, 10, 177, 580);
+
+        // 3. Disegna le icone manuali
+        g.drawImage(dartImage, 607, 180, 33, 33, this);
+        g.drawImage(tackImage, 642, 180, 33, 33, this);
+        g.drawImage(iceImage, 677, 180, 33, 33, this);
+        g.drawImage(bombImage, 712, 180, 33, 33, this);
+        g.drawImage(superImage, 747, 180, 33, 33, this);
+        //#endregion
+
+        if (immagineMouse != null) {
+            g.drawImage(immagineMouse, mouseX - 23, mouseY - 23, this);
+        }
+
+        for (int i = 0; i < NelD1A; i++) {
+            g.drawImage(D1A[i].StructureImage, D1A[i].getX(), D1A[i].getY(), this);
+        }
+        
     }
 
     @Override
@@ -125,8 +144,6 @@ public class MyPanel extends JPanel {
             e.printStackTrace();
         }
     }
-
-    // Metodo di supporto per non ripetere codice
     private JLabel createLabel(String text, int x, int y, Font font, Color color) {
         JLabel l = new JLabel(text);
         l.setBounds(x, y, 200, 31);
@@ -153,53 +170,6 @@ public class MyPanel extends JPanel {
         Panel.add(TextArea);
         return TextArea;
     }
-
-    public void paintComponent(Graphics g) {
-
-        super.paintComponent(g); // Pulisce lo schermo
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // 1. Disegna lo sfondo
-        g2d.drawImage(Bg, 0, 0, getWidth(), getHeight(), this);
-
-        // 2. Disegna il rettangolo del menu
-        g2d.setColor(new Color(191, 191, 191, 200));
-        g2d.fillRect(605, 10, 177, 580);
-
-        // 3. Disegna le icone manuali
-        g2d.drawImage(dartImage, 607, 180, 33, 33, this);
-        g2d.drawImage(tackImage, 642, 180, 33, 33, this);
-        g2d.drawImage(iceImage, 677, 180, 33, 33, this);
-        g2d.drawImage(bombImage, 712, 180, 33, 33, this);
-        g2d.drawImage(superImage, 747, 180, 33, 33, this);
-
-        g.drawImage(Prova1.ImmagineBloons, Prova1.x, Prova1.y, 30, 30, this);
-
-        if (immagineMouse == D1.dartMonkeyImage || immagineMouse == S1.superMonkeyImage) {
-            //g2d.drawImage(immagineMouse, mouseX - 23, mouseY - 23, 50, 50, this);
-        }
-        if (immagineMouse == T1.tackImage || immagineMouse == I1.iceTowerImage) {
-            g2d.drawImage(immagineMouse, mouseX - 21, mouseY - 21, 45, 45, this);
-        }
-        if(immagineMouse == B1.bombMonkeyImage){
-            g2d.drawImage(immagineMouse, mouseX - 14, mouseY - 21, 29, 55, this);
-        }
-
-        if (StampaImmagine == true) {
-            DartMonkey NewMonkey = new DartMonkey();
-            NewMonkey.setX(mouseX- 14);
-            NewMonkey.setY(mouseY- 21);
-            D1A[1] = NewMonkey;
-        }
-
-        for (int i = NelD1A; i < D1A.length; i++) {
-            g2d.drawImage(D1A[i].dartMonkeyImage, mouseX - 23, mouseY - 23, 50, 50, this);
-        }
-
-
-    }
-
     public void createMenu(Structure S1){
         Color textColor = new Color(24, 129, 25);
         if (pannelloStatistiche.isVisible()==false) {
@@ -210,4 +180,13 @@ public class MyPanel extends JPanel {
             description = createMenuTextArea(S1.getDescription(), 5, 130, textColor, pannelloStatistiche);
         }
     }
+    private void inizializzaAdapter(){
+        MyKeyAdapter KeyBoard = new MyKeyAdapter(this);
+        addKeyListener(KeyBoard);
+        MyMouseMotionAdapter MouseMotionAdapter = new MyMouseMotionAdapter(this);
+        addMouseMotionListener(MouseMotionAdapter);
+        MyMouseAdapter MouseAdapter = new MyMouseAdapter(this);
+        addMouseListener(MouseAdapter);
+    }
+
 }
