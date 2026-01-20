@@ -1,6 +1,18 @@
 package Troops;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
+
 public class Structure {
+
+    public Image StructureImage = null;
+ 
+    public Structure(ImageIcon structureImage) {
+        StructureImage = structureImage.getImage();
+    }
+
     String title;
     String cost;
     String speed;
