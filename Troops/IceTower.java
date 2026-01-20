@@ -7,6 +7,7 @@ public class IceTower extends Structure{
     public Image iceTowerImage = new ImageIcon("immagini/BTD1_towerice.png").getImage();
 
     public IceTower() {
+        super(new ImageIcon("immagini/BTD1_towerice.png"));
         this.title = "    Ice Tower";
         this.cost = "850";
         this.speed = "Slow";

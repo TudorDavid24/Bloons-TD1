@@ -7,6 +7,7 @@ public class BombTower extends Structure{
     public Image bombMonkeyImage = new ImageIcon("immagini/BTD1_TowerBomb.png").getImage();
 
     public BombTower() {
+        super(new ImageIcon("immagini/BTD1_TowerBomb.png"));
         this.title = "  Bomb Tower";
         this.cost = "900";
         this.speed = "Medium";

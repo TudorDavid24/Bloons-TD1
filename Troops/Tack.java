@@ -7,6 +7,7 @@ public class Tack extends Structure{
     public Image tackImage = new ImageIcon("immagini/BTD1_towertack.png").getImage();
 
     public Tack() {
+        super(new ImageIcon("immagini/BTD1_towertack.png"));
         this.title = "  Tack Tower";
         this.cost = "325";
         this.speed = "Medium";

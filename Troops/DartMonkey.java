@@ -8,6 +8,7 @@ public class DartMonkey extends Structure{
     public Image dartMonkeyImage = new ImageIcon("immagini/BTD1_towerdart.png").getImage();
 
     public DartMonkey() {
+        super(new ImageIcon("immagini/BTD1_towerdart.png"));
         this.title = "  Dart Tower";
         this.cost = "250";
         this.speed = "Fast";

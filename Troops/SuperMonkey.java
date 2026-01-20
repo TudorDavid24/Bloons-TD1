@@ -7,6 +7,7 @@ public class SuperMonkey extends Structure{
     public Image superMonkeyImage = new ImageIcon("immagini/BTD1_towersuper.png").getImage();
 
     public SuperMonkey() {
+        super(new ImageIcon("immagini/BTD1_towersuper.png"));
         this.title = "Super Monkey";
         this.cost = "4000";
         this.speed = "Hypersonic";
