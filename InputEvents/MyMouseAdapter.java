@@ -17,34 +17,46 @@ public class MyMouseAdapter implements MouseListener {
     BombTower B1 = new BombTower();   
     SuperMonkey S1 = new SuperMonkey();
 
+    boolean piazzaTruppa = false;
+
     MyPanel pannelloSuCuiLavorare;
       public MyMouseAdapter(MyPanel p){
         this.pannelloSuCuiLavorare = p;
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getX() +" " +e.getY());
+        System.out.println(e.getX() + " " + e.getY());
 
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la scimmia dart");
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new DartMonkey();
+            piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = D1.dartMonkeyImage;
         }
+
         if (e.getX()>642 && e.getX()<642+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la tack");
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new Tack();
+            piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = T1.tackImage;
         }
         if (e.getX()>677 && e.getX()<677+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la ice");
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new IceTower();
+            piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = I1.iceTowerImage;
         }
         if (e.getX()>712 && e.getX()<712+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la bomb");
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new BombTower();
+            piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = B1.bombMonkeyImage;
         }
         if (e.getX()>747 && e.getX()<747+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la scimmia super");
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new SuperMonkey();
+            piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = S1.superMonkeyImage;
         }
 
@@ -55,6 +67,14 @@ public class MyMouseAdapter implements MouseListener {
             pannelloSuCuiLavorare.StampaImmagine = true;
             pannelloSuCuiLavorare.immagineMouse = null;
             pannelloSuCuiLavorare.StampaImmagine = false;
+
+            if (piazzaTruppa == true) {
+                pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].setX(e.getX() - 23);
+                pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].setY(e.getY() - 23);
+                pannelloSuCuiLavorare.NelD1A++;
+                pannelloSuCuiLavorare.repaint();
+                piazzaTruppa=false;
+            }
         }
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
