@@ -61,7 +61,6 @@ public class MyMouseMotionAdapter implements MouseMotionListener{
             pannelloSuCuiLavorare.repaint();
         }
 
-
         if (pannelloSuCuiLavorare.immagineMouse != null) {
             pannelloSuCuiLavorare.mouseX = e.getX();
             pannelloSuCuiLavorare.mouseY = e.getY();
