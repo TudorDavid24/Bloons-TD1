@@ -27,7 +27,7 @@ public class MyMouseAdapter implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println(e.getX() + " " + e.getY());
-
+    //#region Hai premuto un icona
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la scimmia dart");
             pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new DartMonkey();
@@ -59,7 +59,8 @@ public class MyMouseAdapter implements MouseListener {
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = S1.superMonkeyImage;
         }
-
+        //#endregion
+    //#region Hai premuto nel camp
         if (e.getX()>0 && e.getX()<600 && e.getY()>0&& e.getY()<600) {
             System.out.println("Hai premuto nel campo");
             pannelloSuCuiLavorare.mouseX = e.getX();
@@ -67,8 +68,9 @@ public class MyMouseAdapter implements MouseListener {
             pannelloSuCuiLavorare.StampaImmagine = true;
             pannelloSuCuiLavorare.immagineMouse = null;
             pannelloSuCuiLavorare.StampaImmagine = false;
-
-            if (piazzaTruppa == true) {
+        //#endregion           
+    //#region Piazza truppe
+        if (piazzaTruppa == true) {
                 pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].setX(e.getX() - 23);
                 pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].setY(e.getY() - 23);
                 pannelloSuCuiLavorare.NelD1A++;
@@ -76,8 +78,19 @@ public class MyMouseAdapter implements MouseListener {
                 piazzaTruppa=false;
             }
         }
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+    //#endregion
+        
+    if (!pannelloSuCuiLavorare.RoundIsStarted) {
+        if (e.getX()>615 && e.getX()<772 && e.getY()>535&& e.getY()<580) {
+            pannelloSuCuiLavorare.NumeroRound++;
+            pannelloSuCuiLavorare.StartRectButton.setLocation(3000, 3000);
+            pannelloSuCuiLavorare.startRoundLabel.setVisible(false);
+            pannelloSuCuiLavorare.RoundIsStarted=true;
+            pannelloSuCuiLavorare.GestisciRound();
+
+        }
+    }
+
     }
 
     @Override

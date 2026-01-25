@@ -1,73 +1,104 @@
 package Bloons;
 import java.awt.Image;
-
+import javax.swing.ImageIcon;
 import UI.MyPanel;
 
 
 public class Bloons extends Thread {
     
-    public int tipo, speed, x, y;
-    public Image ImmagineBloons;
-
+    private int tipo, TempoAttesa=1, TempoAttesaIni, x=-60, y=260;
+    public Image ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
     public MyPanel pannelloSuCuiLavorare;
 
+    public Bloons(MyPanel pannelloSuCuiLavorare) {
+        this.pannelloSuCuiLavorare = pannelloSuCuiLavorare;
+    }
 
     @Override
     public void run() {
+        try {
+            sleep(TempoAttesaIni);
+            for (int i = 0; i < 160; i++) {
+                x++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 150; i++) {
+                y--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 140; i++) {
+                x++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 300; i++) {
+                y++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 190; i++) {
+                x--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 100; i++) {
+                y++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 455; i++) {
+                x++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 158; i++) {
+                y--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 140; i++) {
+                x--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 137; i++) {
+                y--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 144; i++) {
+                x++;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 167; i++) {
+                y--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 201; i++) {
+                x--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+            for (int i = 0; i < 72; i++) {
+                y--;
+                sleep(TempoAttesa);
+                pannelloSuCuiLavorare.repaint();
+            }
+        } catch (Exception e) {}
+    }
 
-        while(true){
-            if (x < 90 && y > 255 && y < 312) {
-                x += speed;
-            } 
-            else if (x >= 90 && x < 140 && y > 140) {
-                y -= speed;
-            } 
-            else if (x >= 90 && x < 140 && y <= 140) {
-                x += speed;
-            }
-            else if (x >= 140 && x < 225 && y <= 150) {
-                x += speed;
-            }
-            else if (x >= 225 && y < 413) {
-                y += speed;
-            }
-            else if (x > 94 && y >= 413) {
-                x -= speed;
-            }
-            else if (x <= 94 && y < 505) {
-                y += speed;
-            }
-            else if (x < 492 && y >= 505) {
-                x += speed;
-            }
-            else if (x >= 492 && y > 405) {
-                y -= speed;
-            }
-            else if (x > 400 && y <= 405) {
-                x -= speed;
-            }
-            else if (x <= 400 && y > 260) {
-                y -= speed;
-            }
-            else if (x < 495 && y <= 260) {
-                x += speed;
-            }
-            else if (x >= 495 && y > 93) {
-                y -= speed;
-            }
-            else if (x > 345 && y <= 93) {
-                x -= speed;
-            }
-            else if (x <= 345) {
-                y -= speed;
-            }
-            
-            pannelloSuCuiLavorare.repaint();
-            
-            try {
-                sleep(33);
-            } catch (Exception e) {}
-        }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setTempoAttesaIni(int tempoAttesaIni) {
+        TempoAttesaIni = tempoAttesaIni;
     }
 
 }
