@@ -1,5 +1,7 @@
 package UI;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,12 +23,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.io.File;
+import java.util.Arrays;
 
 public class MyPanel extends JPanel {
 
-    Bloons Prova1 = new Bloons();
-    
     //Truppe
     DartMonkey D1 = new DartMonkey();
     Tack T1 = new Tack();
@@ -34,8 +36,13 @@ public class MyPanel extends JPanel {
     BombTower B1 = new BombTower();   
     SuperMonkey S1 = new SuperMonkey();
 
+    //Array delle strutture
     public Structure D1A[] = new Structure[10];
     public int NelD1A = 0;
+
+    //Array dei palloncini
+    public Bloons B1A[] = new Bloons[40];
+    public int NelB1A = 0;
 
     //Immagini
     Image Bg = new ImageIcon("Immagini/BTD1_bg.png").getImage();
@@ -48,7 +55,8 @@ public class MyPanel extends JPanel {
     public JPanel pannelloStatistiche = new JPanel();
 
     //Labels
-    JLabel roundLabel, moneyLabel, livesLabel, towersLabel;
+    public JLabel roundLabel, moneyLabel, livesLabel, towersLabel, startRoundLabel;
+    public Rectangle StartRectButton = new Rectangle(615, 535, 157, 45);
 
     //Labels Info scimmie
     public JLabel title, cost, speed;
@@ -58,9 +66,21 @@ public class MyPanel extends JPanel {
     public int mouseX, mouseY;
     public Image immagineMouse = null;
 
+    //Stampa immagine
     public Boolean StampaImmagine = false;
+
+    //Logica Round
+    public int NumeroRound = 0;
+    public boolean RoundIsStarted = false;
+    int NumeroPalloncini=0;
+    private AtomicInteger pallonciniAttivi = new AtomicInteger(0);
+
+
+    boolean tuttiFiniti = false;
+
     
     public MyPanel() {
+
         setLayout(null);
         setupLabels();
         inizializzaAdapter();
@@ -70,21 +90,12 @@ public class MyPanel extends JPanel {
         pannelloStatistiche.setBounds(615, 230, 157, 300);
         pannelloStatistiche.setVisible(false);
         add(pannelloStatistiche);
-
-        //Prova dei pallonici
-        /*Prova1.ImmagineBloons = new ImageIcon("Immagini/BTD1_super_button.png").getImage();
-        Prova1.speed = 5;
-        Prova1.x=0;
-        Prova1.y=290;
-        Prova1.pannelloSuCuiLavorare=this;
-        Prova1.tipo=1;
-        Prova1.start();*/
         
-        //Iniziallizzazione dell'array a null
-        for (int i = 0; i < 10; i++) {
+        //Iniziallizzazione dell'array Structure a null
+        for (int i = 0; i < D1A.length; i++) {
             D1A[i] = null;
         }
-    
+        
     }
     
     public void paintComponent(Graphics g) {
@@ -105,6 +116,10 @@ public class MyPanel extends JPanel {
         g.drawImage(iceImage, 677, 180, 33, 33, this);
         g.drawImage(bombImage, 712, 180, 33, 33, this);
         g.drawImage(superImage, 747, 180, 33, 33, this);
+
+        //4. Disegna il pulsante di start
+        g.setColor(new Color(78, 203, 75, 255));
+        g.fillRect(StartRectButton.x, StartRectButton.y, StartRectButton.width, StartRectButton.height);
         //#endregion
 
         if (immagineMouse != null) {
@@ -114,6 +129,14 @@ public class MyPanel extends JPanel {
         for (int i = 0; i < NelD1A; i++) {
             g.drawImage(D1A[i].StructureImage, D1A[i].getX(), D1A[i].getY(), this);
         }
+
+        if (RoundIsStarted) {
+            for (int i = 0; i < B1A.length; i++) {
+            g.drawImage(B1A[i].ImmagineBloons, B1A[i].getX(), B1A[i].getY(), 30, 42, this);
+            } 
+        }
+        
+
         
     }
 
@@ -128,13 +151,13 @@ public class MyPanel extends JPanel {
         int labelY = 21;
 
         try {
-            // Carica il font UNA VOLTA SOLA
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("LuckiestGuy-Regular.ttf")).deriveFont((float)labelY);
 
             roundLabel = createLabel("Round:", 620, 40, customFont, textColor);
             moneyLabel = createLabel("Money:", 620, 70, customFont, textColor);
             livesLabel = createLabel("Lives:", 620, 100, customFont, textColor);
             towersLabel = createLabel("Build Towers", 620, 140, customFont, textColor);
+            startRoundLabel = createLabel("Start Round", 630, 545, customFont, textColor);
             
             title = new JLabel();
             cost = new JLabel();
@@ -174,7 +197,6 @@ public class MyPanel extends JPanel {
         Color textColor = new Color(24, 129, 25);
         if (pannelloStatistiche.isVisible()==false) {
             title = createMenuLabel(S1.getTitle(), 10, 5, textColor, pannelloStatistiche);
-            System.out.print(title.getWidth());
             cost = createMenuLabel("Cost: " +S1.getCost(), 5, 50, textColor, pannelloStatistiche);
             speed = createMenuLabel("Speed: " + S1.getSpeed(), 5, 80, textColor, pannelloStatistiche);
             description = createMenuTextArea(S1.getDescription(), 5, 130, textColor, pannelloStatistiche);
@@ -187,6 +209,59 @@ public class MyPanel extends JPanel {
         addMouseMotionListener(MouseMotionAdapter);
         MyMouseAdapter MouseAdapter = new MyMouseAdapter(this);
         addMouseListener(MouseAdapter);
+    }
+
+
+    public void GestisciRound(){
+
+            for (int i = 0; i < B1A.length; i++) {
+            B1A[i] = new Bloons(this);
+            }
+
+            switch (NumeroRound) {
+                case 1:
+                    StartaNumeroThread( 10);
+                break;
+                case 2:
+                    StartaNumeroThread(20);
+                break;
+                case 3:
+                    StartaNumeroThread(5);
+                break;
+            }
+    }
+
+    private void StartaNumeroThread(int numeroPalloncini){
+
+    pallonciniAttivi.set(numeroPalloncini); // Imposta quanti devono finire
+
+        for (int i = 0; i < numeroPalloncini; i++) {
+            final int index = i;
+            B1A[i].setTempoAttesaIni(400 * i);
+            
+            // Se Bloons estende Thread, dobbiamo sovrascrivere il comportamento
+            // o assicurarci che alla fine del suo run() decrementi il contatore.
+            // Se non puoi modificare Bloons, avvolgilo così:
+            new Thread(() -> {
+                B1A[index].run(); // Esegue la logica del movimento
+                
+                // QUANDO IL THREAD FINISCE:
+                if (pallonciniAttivi.decrementAndGet() == 0) {
+                    // Questo è l'ultimo palloncino!
+                    fineRoundSafe();
+                }
+            }).start();
+        }
+    }
+
+    private void fineRoundSafe() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            System.out.println("Round Finito!");
+            RoundIsStarted = false;
+            StartRectButton.setLocation(615, 535);
+            startRoundLabel.setVisible(true);
+            repaint();
+        });
     }
 
 }
