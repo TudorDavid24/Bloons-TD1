@@ -1,7 +1,5 @@
 package UI;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +9,7 @@ import Bloons.Bloons;
 import InputEvents.MyKeyAdapter;
 import InputEvents.MyMouseAdapter;
 import InputEvents.MyMouseMotionAdapter;
+import Proiettili.Darts;
 import Troops.BombTower;
 import Troops.DartMonkey;
 import Troops.IceTower;
@@ -22,27 +21,55 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.io.File;
-import java.util.Arrays;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MyPanel extends JPanel {
 
-    //Truppe
-    DartMonkey D1 = new DartMonkey();
-    Tack T1 = new Tack();
-    IceTower I1 = new IceTower();
-    BombTower B1 = new BombTower();   
-    SuperMonkey S1 = new SuperMonkey();
+    public MyPanel() {
+
+        setLayout(null);
+        setupLabels();
+        inizializzaAdapter();
+
+        pannelloStatistiche.setLayout(null);
+        pannelloStatistiche.setBackground(new Color(190, 218, 201)); 
+        pannelloStatistiche.setBounds(615, 230, 157, 300);
+        pannelloStatistiche.setVisible(false);
+        add(pannelloStatistiche);
+        
+        D1A = new Structure[10];
+        //Iniziallizzazione dell'array Structure a null
+        for (int i = 0; i < D1A.length; i++) {
+            D1A[i] = null;
+        }
+
+        B1A = new CopyOnWriteArrayList<>();
+        ArrayDardi = new CopyOnWriteArrayList<>();
+
+    }
 
     //Array delle strutture
-    public Structure D1A[] = new Structure[10];
+    public Structure D1A[];
     public int NelD1A = 0;
 
     //Array dei palloncini
-    public Bloons B1A[] = new Bloons[40];
-    public int NelB1A = 0;
+    public CopyOnWriteArrayList<Bloons> B1A;
+
+    //Array dei dardi
+    public CopyOnWriteArrayList<Darts> ArrayDardi;
+
+    //Truppe
+    DartMonkey D1 = new DartMonkey(this);
+    Tack T1 = new Tack(this);
+    IceTower I1 = new IceTower(this);
+    BombTower B1 = new BombTower(this);   
+    SuperMonkey S1 = new SuperMonkey(this);
 
     //Immagini
     Image Bg = new ImageIcon("Immagini/BTD1_bg.png").getImage();
@@ -73,33 +100,13 @@ public class MyPanel extends JPanel {
     public int NumeroRound = 0;
     public boolean RoundIsStarted = false;
     int NumeroPalloncini=0;
-    private AtomicInteger pallonciniAttivi = new AtomicInteger(0);
-
 
     boolean tuttiFiniti = false;
 
-    
-    public MyPanel() {
-
-        setLayout(null);
-        setupLabels();
-        inizializzaAdapter();
-
-        pannelloStatistiche.setLayout(null);
-        pannelloStatistiche.setBackground(new Color(190, 218, 201)); 
-        pannelloStatistiche.setBounds(615, 230, 157, 300);
-        pannelloStatistiche.setVisible(false);
-        add(pannelloStatistiche);
-        
-        //Iniziallizzazione dell'array Structure a null
-        for (int i = 0; i < D1A.length; i++) {
-            D1A[i] = null;
-        }
-        
-    }
+    Image dardoImg = new ImageIcon("Immagini/BTD1_dart.png").getImage();
     
     public void paintComponent(Graphics g) {
-
+        Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g); // Pulisce lo schermo
 
         // #region Disegno GUI di base
@@ -127,18 +134,30 @@ public class MyPanel extends JPanel {
         }
 
         for (int i = 0; i < NelD1A; i++) {
-            g.drawImage(D1A[i].StructureImage, D1A[i].getX(), D1A[i].getY(), this);
+            Structure s = D1A[i];
+            AffineTransform vecchioDato = g2d.getTransform();
+            g2d.translate(s.getX() + 23, s.getY() + 23); 
+            g2d.rotate(s.angolo+90);
+            g2d.drawImage(s.StructureImage, -23, -23, this);
+            g2d.setTransform(vecchioDato);
         }
 
         if (RoundIsStarted) {
-            for (int i = 0; i < B1A.length; i++) {
-            g.drawImage(B1A[i].ImmagineBloons, B1A[i].getX(), B1A[i].getY(), 30, 42, this);
-            } 
-        }
-        
 
+            for (Bloons b : B1A) {
+                g.drawImage(b.ImmagineBloons, b.getX(), b.getY(), 30, 42, this);
+            }
         
-    }
+            for (Darts d : ArrayDardi) {
+            AffineTransform vecchioDato = g2d.getTransform();
+            g2d.translate(d.getX(), d.getY());
+            g2d.rotate(Math.atan2(d.velY, d.velX));
+            g2d.drawImage(dardoImg, 0, 0, 30, 10, this);
+            g2d.setTransform(vecchioDato);
+            }
+
+        }
+}
 
     @Override
     public Dimension getPreferredSize() {
@@ -211,50 +230,42 @@ public class MyPanel extends JPanel {
         addMouseListener(MouseAdapter);
     }
 
-
     public void GestisciRound(){
 
-            for (int i = 0; i < B1A.length; i++) {
-            B1A[i] = new Bloons(this);
+                switch (NumeroRound) {
+                    case 1:
+                        StartaNumeroThread(10);
+                    break;
+                    case 2:
+                        StartaNumeroThread(20);
+                    break;
+                    case 3:
+                        StartaNumeroThread(5);
+                    break;
             }
-
-            switch (NumeroRound) {
-                case 1:
-                    StartaNumeroThread( 10);
-                break;
-                case 2:
-                    StartaNumeroThread(20);
-                break;
-                case 3:
-                    StartaNumeroThread(5);
-                break;
-            }
-    }
+        }
 
     private void StartaNumeroThread(int numeroPalloncini){
 
-    pallonciniAttivi.set(numeroPalloncini); // Imposta quanti devono finire
-
+        B1A.clear(); // Pulisci la lista per il nuovo round
+         
         for (int i = 0; i < numeroPalloncini; i++) {
-            final int index = i;
-            B1A[i].setTempoAttesaIni(400 * i);
+            Bloons b = new Bloons(this);
+            b.setTempoAttesaIni(200 * i);
+            B1A.add(b); // Aggiungi alla lista
             
-            // Se Bloons estende Thread, dobbiamo sovrascrivere il comportamento
-            // o assicurarci che alla fine del suo run() decrementi il contatore.
-            // Se non puoi modificare Bloons, avvolgilo così:
             new Thread(() -> {
-                B1A[index].run(); // Esegue la logica del movimento
-                
-                // QUANDO IL THREAD FINISCE:
-                if (pallonciniAttivi.decrementAndGet() == 0) {
-                    // Questo è l'ultimo palloncino!
-                    fineRoundSafe();
+                b.run();
+                // Quando il palloncino finisce il percorso o scoppia:
+                B1A.remove(b); 
+                if (B1A.isEmpty()) {
+                    fineRound();
                 }
             }).start();
         }
     }
 
-    private void fineRoundSafe() {
+    private void fineRound() {
         javax.swing.SwingUtilities.invokeLater(() -> {
             System.out.println("Round Finito!");
             RoundIsStarted = false;
