@@ -11,17 +11,19 @@ import UI.MyPanel;
 
 public class MyMouseMotionAdapter implements MouseMotionListener{ 
     
-    DartMonkey DartMonkeyItem = new DartMonkey();
-    Tack TackItem = new Tack();
-    IceTower IceTowerItem = new IceTower();
-    BombTower BombTowerItem = new BombTower();
-    SuperMonkey SuperMonkeyItem = new SuperMonkey();
     MyPanel pannelloSuCuiLavorare;
-    
+
     public MyMouseMotionAdapter(MyPanel p){
         this.pannelloSuCuiLavorare = p;
     }
-    
+
+    DartMonkey DartMonkeyItem = new DartMonkey(pannelloSuCuiLavorare);
+    Tack TackItem = new Tack(pannelloSuCuiLavorare);
+    IceTower IceTowerItem = new IceTower(pannelloSuCuiLavorare);
+    BombTower BombTowerItem = new BombTower(pannelloSuCuiLavorare);
+    SuperMonkey SuperMonkeyItem = new SuperMonkey(pannelloSuCuiLavorare);
+
+
     @Override
     public void mouseDragged(MouseEvent e) {
      //System.out.println("Mouse Dragged!");
