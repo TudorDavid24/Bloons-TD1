@@ -11,18 +11,21 @@ import UI.MyPanel;
 
 public class MyMouseAdapter implements MouseListener {
 
-    DartMonkey D1 = new DartMonkey();
-    Tack T1 = new Tack();
-    IceTower I1 = new IceTower();
-    BombTower B1 = new BombTower();   
-    SuperMonkey S1 = new SuperMonkey();
-
-    boolean piazzaTruppa = false;
-
     MyPanel pannelloSuCuiLavorare;
+
       public MyMouseAdapter(MyPanel p){
         this.pannelloSuCuiLavorare = p;
     }
+
+    DartMonkey D1 = new DartMonkey(pannelloSuCuiLavorare);
+    Tack T1 = new Tack(pannelloSuCuiLavorare);
+    IceTower I1 = new IceTower(pannelloSuCuiLavorare);
+    BombTower B1 = new BombTower(pannelloSuCuiLavorare);
+    SuperMonkey S1 = new SuperMonkey(pannelloSuCuiLavorare);
+
+    boolean piazzaTruppa = false;
+
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -30,32 +33,38 @@ public class MyMouseAdapter implements MouseListener {
     //#region Hai premuto un icona
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la scimmia dart");
-            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new DartMonkey();
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new DartMonkey(pannelloSuCuiLavorare);
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].start();
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = D1.dartMonkeyImage;
         }
 
         if (e.getX()>642 && e.getX()<642+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la tack");
-            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new Tack();
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new Tack(pannelloSuCuiLavorare);
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].start();
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = T1.tackImage;
         }
         if (e.getX()>677 && e.getX()<677+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la ice");
-            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new IceTower();
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new IceTower(pannelloSuCuiLavorare);
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].start();
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = I1.iceTowerImage;
         }
         if (e.getX()>712 && e.getX()<712+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la bomb");
-            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new BombTower();
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new BombTower(pannelloSuCuiLavorare);
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].start();
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = B1.bombMonkeyImage;
         }
         if (e.getX()>747 && e.getX()<747+33 && e.getY()>180&& e.getY()<180+33) {
             System.out.println("Hai premuto la scimmia super");
-            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new SuperMonkey();
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A] = new SuperMonkey(pannelloSuCuiLavorare);
+            pannelloSuCuiLavorare.D1A[pannelloSuCuiLavorare.NelD1A].start();
+            
             piazzaTruppa=true;
             pannelloSuCuiLavorare.immagineMouse = S1.superMonkeyImage;
         }
@@ -87,7 +96,6 @@ public class MyMouseAdapter implements MouseListener {
             pannelloSuCuiLavorare.startRoundLabel.setVisible(false);
             pannelloSuCuiLavorare.RoundIsStarted=true;
             pannelloSuCuiLavorare.GestisciRound();
-
         }
     }
 
