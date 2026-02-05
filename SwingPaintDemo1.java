@@ -11,8 +11,7 @@ public class SwingPaintDemo1 {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
-                
+                createAndShowGUI();   
             }
         });
 
