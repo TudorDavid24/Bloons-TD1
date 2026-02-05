@@ -4,11 +4,10 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-
-public class Structure {
+public class Structure extends Thread {
 
     public Image StructureImage = null;
- 
+
     public Structure(ImageIcon structureImage) {
         StructureImage = structureImage.getImage();
     }
@@ -19,7 +18,8 @@ public class Structure {
     String description;
     int raggioAzione;
     int x,y;
-
+    
+    public double angolo = 0;
     public int getX() {
         return x;
     }
