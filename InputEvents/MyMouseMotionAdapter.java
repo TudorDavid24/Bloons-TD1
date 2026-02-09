@@ -11,69 +11,67 @@ import UI.MyPanel;
 
 public class MyMouseMotionAdapter implements MouseMotionListener{ 
     
-    MyPanel pannelloSuCuiLavorare;
+    MyPanel pannello;
 
     public MyMouseMotionAdapter(MyPanel p){
-        this.pannelloSuCuiLavorare = p;
+        this.pannello = p;
     }
 
-    DartMonkey DartMonkeyItem = new DartMonkey(pannelloSuCuiLavorare);
-    Tack TackItem = new Tack(pannelloSuCuiLavorare);
-    IceTower IceTowerItem = new IceTower(pannelloSuCuiLavorare);
-    BombTower BombTowerItem = new BombTower(pannelloSuCuiLavorare);
-    SuperMonkey SuperMonkeyItem = new SuperMonkey(pannelloSuCuiLavorare);
+    DartMonkey DartMonkeyItem = new DartMonkey(pannello);
+    Tack TackItem = new Tack(pannello);
+    IceTower IceTowerItem = new IceTower(pannello);
+    BombTower BombTowerItem = new BombTower(pannello);
+    SuperMonkey SuperMonkeyItem = new SuperMonkey(pannello);
 
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-     //System.out.println("Mouse Dragged!");
-    }
+    public void mouseDragged(MouseEvent e) {}
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        //Fai visualizzare la descrizione delle truppe
+
+        //region Mostra le statistiche di una truppa quando l'utente ci passa sopra
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
-            pannelloSuCuiLavorare.createMenu(DartMonkeyItem);
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
-            pannelloSuCuiLavorare.repaint();
-        }
-        else if (e.getX()>642 && e.getX()<642+33 && e.getY()>180&& e.getY()<180+33) {
-            pannelloSuCuiLavorare.createMenu(TackItem);
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
-            pannelloSuCuiLavorare.repaint();
-        }
-        else if (e.getX()>677 && e.getX()<677+33 && e.getY()>180&& e.getY()<180+33) {
-            pannelloSuCuiLavorare.createMenu(IceTowerItem);
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
-            pannelloSuCuiLavorare.repaint();
-        }
-        else if (e.getX()>712 && e.getX()<712+33 && e.getY()>180&& e.getY()<180+33) {
-            pannelloSuCuiLavorare.createMenu(BombTowerItem);
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
-            pannelloSuCuiLavorare.repaint();
-        }
-        else if (e.getX()>747 && e.getX()<747+33 && e.getY()>180&& e.getY()<180+33) {
-            pannelloSuCuiLavorare.createMenu(SuperMonkeyItem);
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(true);
-            pannelloSuCuiLavorare.repaint();
-        }
-        else{
-            RemoveLabels();
-            pannelloSuCuiLavorare.pannelloStatistiche.setVisible(false);
-            pannelloSuCuiLavorare.repaint();
+            pannello.createMenu(DartMonkeyItem);
+            pannello.pannelloStatistiche.setVisible(true);
         }
 
-        if (pannelloSuCuiLavorare.immagineMouse != null) {
-            pannelloSuCuiLavorare.mouseX = e.getX();
-            pannelloSuCuiLavorare.mouseY = e.getY();
-            pannelloSuCuiLavorare.repaint();
+        else if (e.getX()>642 && e.getX()<642+33 && e.getY()>180&& e.getY()<180+33) {
+            pannello.createMenu(TackItem);
+            pannello.pannelloStatistiche.setVisible(true);
+        }
+
+        else if (e.getX()>677 && e.getX()<677+33 && e.getY()>180&& e.getY()<180+33) {
+            pannello.createMenu(IceTowerItem);
+            pannello.pannelloStatistiche.setVisible(true);
+        }
+
+        else if (e.getX()>712 && e.getX()<712+33 && e.getY()>180&& e.getY()<180+33) {
+            pannello.createMenu(BombTowerItem);
+            pannello.pannelloStatistiche.setVisible(true);
+        }
+
+        else if (e.getX()>747 && e.getX()<747+33 && e.getY()>180&& e.getY()<180+33) {
+            pannello.createMenu(SuperMonkeyItem);
+            pannello.pannelloStatistiche.setVisible(true);
+        }
+        else{
+            removeLabels();
+        }
+        //#endregion
+
+        if (pannello.immagineMouse != null) {
+            pannello.mouseX = e.getX();
+            pannello.mouseY = e.getY();
+            pannello.repaint();
         }
     }
 
-    public void RemoveLabels(){
-            pannelloSuCuiLavorare.pannelloStatistiche.remove(pannelloSuCuiLavorare.title);
-            pannelloSuCuiLavorare.pannelloStatistiche.remove(pannelloSuCuiLavorare.cost);
-            pannelloSuCuiLavorare.pannelloStatistiche.remove(pannelloSuCuiLavorare.speed);
-            pannelloSuCuiLavorare.pannelloStatistiche.remove(pannelloSuCuiLavorare.description);
+    public void removeLabels(){
+        pannello.pannelloStatistiche.remove(pannello.title);
+        pannello.pannelloStatistiche.remove(pannello.cost);
+        pannello.pannelloStatistiche.remove(pannello.speed);
+        pannello.pannelloStatistiche.remove(pannello.description);
+        pannello.pannelloStatistiche.setVisible(false);
     }
 }
