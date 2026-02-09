@@ -7,51 +7,75 @@ import UI.MyPanel;
 
 public class Darts extends Thread {
 
-    int x, y; // Coordinate attuali del dardo
-    public int bloonX, bloonY;
+    int x, y;
     public double velX, velY;
     MyPanel pannello;
     boolean inVolo = true;
 
-    public Darts(int monkeyX, int monkeyY, Bloons target, MyPanel p) {
+    public Darts(int monkeyX, int monkeyY, Bloons palloncino, MyPanel p) {
+
         this.x = monkeyX;
         this.y = monkeyY;
         this.pannello = p;
 
-        double diffX = target.getX() - monkeyX;
-        double diffY = target.getY() - monkeyY;
-        double distanza = Math.sqrt(diffX*diffX + diffY*diffY);
+        //Calcolo della posizione del centro del bloon
+        double targetX = palloncino.getX() + 15; 
+        double targetY = palloncino.getY() + 21;
+
+        //Calcolo della differenza di posizione tra la x e la y della scimmia e il bloon
+        double diffX = targetX - monkeyX;
+        double diffY = targetY - monkeyY;
         
-        this.velX = (diffX / distanza) * 5;
-        this.velY = (diffY / distanza) * 5;
+        //Formula di pitagora per calcolare la distanza obliqua tra la scimmia e il bloon
+        double distanza = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+
+        //Imposta la velocità del dardo
+        double velocitaDardo = 8.0;
+        
+        //Normalizzazione del vettore di direzione e moltiplicazione per la velocità del dardo
+        this.velX = (diffX / distanza) * velocitaDardo;
+        this.velY = (diffY / distanza) * velocitaDardo;
+
     }
 
     @Override
     public void run() {
         while (inVolo) {
+
             x += velX;
             y += velY;
+            synchronized (pannello.bloonsArray) {
+                for (int i = pannello.bloonsArray.size() - 1; i >= 0; i--) {
 
-            for (int i = 0; i < pannello.B1A.size(); i++) {
-                Bloons b = pannello.B1A.get(i);
-                Rectangle hitBoxPalloncino = new Rectangle(b.getX(), b.getY(), 30, 42);
-                bloonX=b.getX();
-                bloonY=b.getY();
-                if (hitBoxPalloncino.contains(x, y)) {
-                    pannello.B1A.remove(i); 
-                    inVolo = false;
-                    break;
+                    Bloons b = pannello.bloonsArray.get(i);
+                    Rectangle hitBoxPalloncino = new Rectangle(b.getX(), b.getY(), 30, 42);
+
+                    if (hitBoxPalloncino.contains(x,y)) {
+                        pannello.PlaySound("PopBloon.wav");
+                        pannello.bloonsArray.remove(i);
+                        b.isColpito=true;
+                        b.interrupt();
+                        pannello.money++;
+                        pannello.moneyLabelValue.setText(String.valueOf(pannello.money));
+                        inVolo = false;
+                        break;
+                    }
                 }
             }
 
-            // Uscita dallo schermo
+            // Controllo se il dardo esce dal campo
             if (x < 0 || x > 580 || y < 0 || y > 600) 
                 inVolo = false;
 
-            pannello.repaint(); 
+            pannello.repaint();
+
             try { Thread.sleep(20); } catch (InterruptedException e) {}
+
         }
-        pannello.ArrayDardi.remove(this); // Rimuoviti dalla lista una volta finito
+        //Rimuove il dardo dall'array una volta che ha colpito un bloon o è uscita dal campo
+        pannello.dartsArray.remove(this);
+        pannello.repaint();
+
     }
 
     public int getX() {
