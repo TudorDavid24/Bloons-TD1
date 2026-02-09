@@ -1,208 +1,175 @@
 package Bloons;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+
 import UI.MyPanel;
 
 
 public class Bloons extends Thread {
     
-    private int tipo, TempoAttesa=10, TempoAttesaIni, x=-60, y=260;
+    public int TempoAttesa=10, TempoAttesaIni, x=-60, y=260;
     public Image ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
-    public MyPanel pannelloSuCuiLavorare;
+    public MyPanel pannello;
     public Boolean isCongelato = false;
     private int tempoCongelamento = 1500;
-    
-    public Bloons(MyPanel pannelloSuCuiLavorare) {
-        this.pannelloSuCuiLavorare = pannelloSuCuiLavorare;
+    public boolean isColpito = false;
+
+    public Bloons(MyPanel p) {
+        this.pannello = p;
     }
 
-    @Override
+   @Override
     public void run() {
         try {
             sleep(TempoAttesaIni);
-            for (int i = 0; i < 160; i++) {
+            for (int i = 0; i < 160 && !isColpito; i++) {
                 x++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 150; i++) {
+            for (int i = 0; i < 150 && !isColpito; i++) {
                 y--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 140; i++) {
+            for (int i = 0; i < 140 && !isColpito; i++) {
                 x++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < 300 && !isColpito; i++) {
                 y++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 190; i++) {
+            for (int i = 0; i < 190 && !isColpito; i++) {
                 x--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100 && !isColpito; i++) {
                 y++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 455; i++) {
+            for (int i = 0; i < 455 && !isColpito; i++) {
                 x++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 158; i++) {
+            for (int i = 0; i < 158 && !isColpito; i++) {
                 y--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 140; i++) {
+            for (int i = 0; i < 140 && !isColpito; i++) {
                 x--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 137; i++) {
+            for (int i = 0; i < 137 && !isColpito; i++) {
                 y--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 144; i++) {
+            for (int i = 0; i < 144 && !isColpito; i++) {
                 x++;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 167; i++) {
+            for (int i = 0; i < 167 && !isColpito; i++) {
                 y--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 201; i++) {
+            for (int i = 0; i < 201 && !isColpito; i++) {
                 x--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-            for (int i = 0; i < 72; i++) {
+            for (int i = 0; i < 80 && !isColpito; i++) {
                 y--;
                 sleep(TempoAttesa);
-                pannelloSuCuiLavorare.repaint();
-                if (isCongelato==true) {
-                    try {
-                        sleep(tempoCongelamento);
-                        isCongelato=false;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
+                pannello.repaint();
+                if (isCongelato) {
+                    sleep(tempoCongelamento);
+                    isCongelato = false;
+                    ImmagineBloons = new ImageIcon("immagini/BTD1_plain1.png").getImage();
                 }
             }
-        } catch (Exception e) {}
+            if (!isColpito) {
+                pannello.bloonsArray.remove(this);
+                pannello.lives--;
+                pannello.livesLabelValue.setText(String.valueOf(pannello.lives));
+            }
+        }
+    catch (InterruptedException e) {return;}
     }
 
     public int getX() {
@@ -214,5 +181,7 @@ public class Bloons extends Thread {
     public void setTempoAttesaIni(int tempoAttesaIni) {
         TempoAttesaIni = tempoAttesaIni;
     }
-
+    public void setImmagineBloons(Image immagineBloons) {
+        ImmagineBloons = immagineBloons;
+    }
 }
