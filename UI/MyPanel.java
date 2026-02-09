@@ -169,7 +169,11 @@ public class MyPanel extends JPanel {
 
         //Disegno di tutto l'array di cannoni
         for (Cannon c : cannonBallsArray) {
-            g2d.drawImage(cannonImg, c.getX(), c.getY(), 15, 18, this);
+            AffineTransform vecchioDato = g2d.getTransform();
+            g2d.translate(c.getX(), c.getY());
+            g2d.rotate(Math.atan2(c.velY, c.velX));
+            g2d.drawImage(cannonImg, -10, -15, 15, 18, this);
+            g2d.setTransform(vecchioDato);
         }
         //Controllo se il round è finito
         fineRound();
