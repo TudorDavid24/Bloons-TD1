@@ -104,11 +104,15 @@ public class MyPanel extends JPanel {
     Image tackImg = new ImageIcon("Immagini/BTD1_tack.png").getImage();
     Image cannonImg = new ImageIcon("Immagini/BTD1_bomb.png").getImage();
     
-    public void paintComponent(Graphics g) {
+    //Stato del gioco
+    public int statoGioco = 0; // 0 = Menu, 1 = Gioco, 2 = Game Over
+    Image StartGameImg = new ImageIcon("Immagini/StartImmage.png").getImage();
+    Image GameOverImg = new ImageIcon("Immagini/GameOver.png").getImage();
 
+    public void paintComponent(Graphics g) {
+        
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g); // Pulisce lo schermo
-
         //#region Disegno GUI di base
         //Disegna lo sfondo
         g.drawImage(Bg, 0, 0, getWidth(), getHeight(), this);
@@ -177,6 +181,19 @@ public class MyPanel extends JPanel {
         }
         //Controllo se il round è finito
         fineRound();
+
+        if (lives<1) {
+            g.drawImage(GameOverImg, 0, 0, getWidth(), getHeight(), this);
+            remove(roundLabelText);
+            remove(moneyLabelText);
+            remove(livesLabelText);
+            remove(towersLabel);
+            remove(startRoundLabel);
+            remove(roundLabelValue);
+            remove(moneyLabelValue); 
+            remove(livesLabelValue);
+            remove(pannelloStatistiche);
+        }
     }
 
     @Override
@@ -210,6 +227,7 @@ public class MyPanel extends JPanel {
         }
     }
     private JLabel createLabel(String text, int x, int y, Font font, Color color) {
+
         JLabel l = new JLabel(text);
         l.setBounds(x, y, 200, 31);
         l.setFont(font);
