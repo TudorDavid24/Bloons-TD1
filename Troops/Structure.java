@@ -17,9 +17,10 @@ public class Structure extends Thread {
     String speed;
     String description;
     int raggioAzione;
-    int x,y;
+    int x = -50, y = -50;
     
     public double angolo = 0;
+
     public int getX() {
         return x;
     }
