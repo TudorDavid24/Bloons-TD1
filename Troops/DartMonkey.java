@@ -43,8 +43,9 @@ public class DartMonkey extends Structure{
                     //Calcolo dell'angolo di direzione della struttura
                     this.angolo = Math.atan2(dy, dx) + 90;
 
-                    pannello.dartsArray.add(new Darts(this.x, this.y, palloncino, pannello));
-                    pannello.dartsArray.getLast().start();
+                    Darts d = new Darts(this.x, this.y, palloncino, pannello);
+                    pannello.dartsArray.add(d);
+                    d.start();
                     
                     //Tempo di ricarica
                     try {

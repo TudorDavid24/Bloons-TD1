@@ -34,26 +34,31 @@ public class MyMouseMotionAdapter implements MouseMotionListener{
         if (e.getX()>607 && e.getX()<607+33 && e.getY()>180&& e.getY()<180+33) {
             pannello.createMenu(DartMonkeyItem);
             pannello.pannelloStatistiche.setVisible(true);
+            pannello.repaint();
         }
 
         else if (e.getX()>642 && e.getX()<642+33 && e.getY()>180&& e.getY()<180+33) {
             pannello.createMenu(TackItem);
             pannello.pannelloStatistiche.setVisible(true);
+            pannello.repaint();
         }
 
         else if (e.getX()>677 && e.getX()<677+33 && e.getY()>180&& e.getY()<180+33) {
             pannello.createMenu(IceTowerItem);
             pannello.pannelloStatistiche.setVisible(true);
+            pannello.repaint();
         }
 
         else if (e.getX()>712 && e.getX()<712+33 && e.getY()>180&& e.getY()<180+33) {
             pannello.createMenu(BombTowerItem);
             pannello.pannelloStatistiche.setVisible(true);
+            pannello.repaint();
         }
 
         else if (e.getX()>747 && e.getX()<747+33 && e.getY()>180&& e.getY()<180+33) {
             pannello.createMenu(SuperMonkeyItem);
             pannello.pannelloStatistiche.setVisible(true);
+            pannello.repaint();
         }
         else{
             removeLabels();

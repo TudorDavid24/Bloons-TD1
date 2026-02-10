@@ -41,8 +41,9 @@ public class BombTower extends Structure{
                     //Calcolo dell'angolo di direzione della struttura
                     this.angolo = Math.atan2(dy, dx) + 90;
 
-                    pannello.cannonBallsArray.add(new Cannon(this.x, this.y, palloncino, pannello));
-                    pannello.cannonBallsArray.getLast().start();
+                    Cannon c = new Cannon(this.x, this.y, palloncino, pannello);
+                    pannello.cannonBallsArray.add(c);
+                    c.start();
                     
                     //Tempo di ricarica
                     try {

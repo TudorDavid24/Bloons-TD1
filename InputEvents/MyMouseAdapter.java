@@ -39,7 +39,7 @@ public class MyMouseAdapter implements MouseListener {
             else{
                 System.out.println("Hai premuto la scimmia dart");
                 pannello.structureArray.add(new DartMonkey(pannello));
-                pannello.structureArray.getLast().start();
+                pannello.structureArray.get(pannello.structureArray.size()-1).start();
                 piazzaTruppa=true;
                 pannello.immagineMouse = D1.dartMonkeyImage;
                 pannello.money -= 250;
@@ -54,7 +54,7 @@ public class MyMouseAdapter implements MouseListener {
             else{
                 System.out.println("Hai premuto la tack");
                 pannello.structureArray.add(new Tack(pannello));
-                pannello.structureArray.getLast().start();
+                pannello.structureArray.get(pannello.structureArray.size()-1).start();
                 piazzaTruppa=true;
                 pannello.immagineMouse = T1.tackImage;
                 pannello.money -= 325;
@@ -68,7 +68,7 @@ public class MyMouseAdapter implements MouseListener {
             else{
                 System.out.println("Hai premuto la ice");
                 pannello.structureArray.add(new IceTower(pannello));
-                pannello.structureArray.getLast().start();
+                pannello.structureArray.get(pannello.structureArray.size()-1).start();
                 piazzaTruppa=true;
                 pannello.immagineMouse = I1.iceTowerImage;
                 pannello.money -= 850;
@@ -82,7 +82,7 @@ public class MyMouseAdapter implements MouseListener {
             else{
                 System.out.println("Hai premuto la bomb");
                 pannello.structureArray.add(new BombTower(pannello));
-                pannello.structureArray.getLast().start();
+                pannello.structureArray.get(pannello.structureArray.size()-1).start();
                 piazzaTruppa=true;
                 pannello.immagineMouse = B1.bombMonkeyImage;
                 pannello.money -= 900;
@@ -96,7 +96,7 @@ public class MyMouseAdapter implements MouseListener {
             else{
                 System.out.println("Hai premuto la scimmia super");
                 pannello.structureArray.add(new SuperMonkey(pannello));
-                pannello.structureArray.getLast().start();
+                pannello.structureArray.get(pannello.structureArray.size()-1).start();
                 piazzaTruppa=true;
                 pannello.immagineMouse = S1.superMonkeyImage;
                 pannello.money -= 1500;
@@ -113,8 +113,8 @@ public class MyMouseAdapter implements MouseListener {
             pannello.immagineMouse = null;
 
             if (piazzaTruppa == true) {
-                    pannello.structureArray.getLast().setX(e.getX() - 23);
-                    pannello.structureArray.getLast().setY(e.getY() - 23);
+                    pannello.structureArray.get(pannello.structureArray.size()-1).setX(e.getX() - 23);
+                    pannello.structureArray.get(pannello.structureArray.size()-1).setY(e.getY() - 23);
                     pannello.repaint();
                     piazzaTruppa=false;
                 }

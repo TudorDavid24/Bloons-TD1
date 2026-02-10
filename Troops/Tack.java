@@ -41,8 +41,9 @@ public void run() {
                 if (distanza <= raggioAzione) {
 
                     for (int k = 0; k < 360; k += 45) {
-                        pannello.tackArray.add(new TacksBullets(this.x + 23, this.y + 23, k, pannello));
-                        pannello.tackArray.getLast().start();
+                        TacksBullets t = new TacksBullets(this.x + 23, this.y + 23, k, pannello);
+                        pannello.tackArray.add(t);
+                        t.start();
                     }
 
                     //Tempo di ricarica
