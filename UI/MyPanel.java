@@ -106,7 +106,7 @@ public class MyPanel extends JPanel {
     
     //Stato del gioco
     public int statoGioco = 0; // 0 = Menu, 1 = Gioco, 2 = Game Over
-    Image StartGameImg = new ImageIcon("Immagini/StartImmage.png").getImage();
+    Image VittoriaImg = new ImageIcon("Immagini/Vittoria.png").getImage();
     Image GameOverImg = new ImageIcon("Immagini/GameOver.png").getImage();
 
     public void paintComponent(Graphics g) {
@@ -194,6 +194,20 @@ public class MyPanel extends JPanel {
             remove(livesLabelValue);
             remove(pannelloStatistiche);
         }
+
+        if (lives==41) {
+            g.drawImage(VittoriaImg, 0, 0, getWidth(), getHeight(), this);
+            remove(roundLabelText);
+            remove(moneyLabelText);
+            remove(livesLabelText);
+            remove(towersLabel);
+            remove(startRoundLabel);
+            remove(roundLabelValue);
+            remove(moneyLabelValue); 
+            remove(livesLabelValue);
+            remove(pannelloStatistiche);
+        }
+        
     }
 
     @Override
@@ -339,6 +353,10 @@ public class MyPanel extends JPanel {
             moneyLabelValue.setText(String.valueOf(money));
             });
             repaint();
+
+            if (numeroRound==10) {
+                lives=41;
+            }
         }
     }
     public void PlaySound(String soundName) {
